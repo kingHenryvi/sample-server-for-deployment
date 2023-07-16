@@ -4,10 +4,10 @@ const mongoose = require("mongoose");
 const Book = require("./models/books");
 const Record = require("./models/record");
 const router = require("./models/record.js");
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors());
 app.use(express.json());
 mongoose.set("strictQuery", false);
 
