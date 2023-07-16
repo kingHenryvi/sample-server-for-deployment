@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const Book = require("./models/books");
+const Record = require("./models/record");
+const router = require("./models/record.js");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -17,36 +19,41 @@ const connectDB = async () => {
   }
 };
 
-app.get("/", (req, res) => {
-  res.send({ title: "Books" });
+app.get("/", async (req, res) => {
+  let results = await Record.find({}).toArray();
+  res.send(results).status(200);
 });
 
-app.get("/add-note", async (req, res) => {
-  try {
-    await Book.insertMany([
-      {
-        title: "Sons of Anarchy",
-        body: "Body text goes here...",
-      },
-      {
-        title: "Game of Throne",
-        body: "Body text goes here...",
-      },
-    ]);
-  } catch (error) {
-    console.log("err" + error);
-  }
-});
+// app.get("/", (req, res) => {
+//   res.send({ title: "Books" });
+// });
 
-app.get("/books", async (req, res) => {
-  const book = await Book.find();
+// app.get("/add-note", async (req, res) => {
+//   try {
+//     await Book.insertMany([
+//       {
+//         title: "Sons of Anarchy",
+//         body: "Body text goes here...",
+//       },
+//       {
+//         title: "Game of Throne",
+//         body: "Body text goes here...",
+//       },
+//     ]);
+//   } catch (error) {
+//     console.log("err" + error);
+//   }
+// });
 
-  if (book) {
-    res.json(book);
-  } else {
-    res.send("Something went wrong.");
-  }
-});
+// app.get("/books", async (req, res) => {
+//   const book = await Book.find();
+
+//   if (book) {
+//     res.json(book);
+//   } else {
+//     res.send("Something went wrong.");
+//   }
+// });
 
 connectDB().then(() => {
   app.listen(PORT, () => {
