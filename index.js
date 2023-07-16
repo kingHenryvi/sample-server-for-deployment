@@ -5,7 +5,7 @@ const Book = require("./models/books");
 const Record = require("./models/record");
 const router = require("./models/record.js");
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 mongoose.set("strictQuery", false);
 
@@ -21,7 +21,7 @@ const connectDB = async () => {
 
 app.get("/", async (req, res) => {
   let results = await Record.find({}).toArray();
-  res.send(results).status(200);
+  res.send(results);
 });
 
 // app.get("/", (req, res) => {
